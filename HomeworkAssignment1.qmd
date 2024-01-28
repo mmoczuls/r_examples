@@ -1,0 +1,47 @@
+---
+title: "HomeworkAssignment1"
+author: "Michelle Mocuzlski"
+format:
+  html:
+    toc: true
+editor: source
+---
+
+
+# Custom colour palettes for ggplot2 notes
+
+### Color packages on R:
+* ggplot2
+    + Can do it manually with scale_colour_manual()
+* RColorBrewer
+* viridis
+
+### Building a colour palette
+
+```{mermaid}
+flowchart LR
+  A[Define your colours] --> B[Generate a palette from your list of colours]
+  B --> C[Create ggplot2 functions to use your palette]
+```
+
+### Defining Colors
+
+* Create a named list for your color palette
+  - Ex: Color_Purple <- c(rbg values)
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
