@@ -1,0 +1,28 @@
+---
+title: "Randy's Reactions"
+format: 
+  html:
+    toc: true
+editor: source
+---
+
+## Homework Assignment 1
+
+Thanks Michelle for your notes and work!  I have a few comments/questions for you:
+
+* what is that mermaid code chuck all about?
+* is there a ColorCode.png file somewhere?
+* where is the 'nitrogenaverage' data?
+
+OK with those questions, aim to have your code/quarto docs be set up something like:
+
+* load packages 
+* load data
+* then write any prose and proceed with analysis and dta vis
+
+This will help to organize things and make sure that other people (like me) can run your code.  Also-without the data you get an error!
+
+Also, add an 'images' directory (like this 'dir.create('images') in the console), then put any images there .  Then you will call them like
+
+![Color Code](images/ColorCode.png)
+
