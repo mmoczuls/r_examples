@@ -24,17 +24,27 @@ flowchart LR
   B --> C[Create ggplot2 functions to use your palette]
 ```
 
-### Defining Colors
+### Defining Colors and generating a palette
 
 * Create a named list for your color palette
   - Ex: Color_Purple <- c(rbg values)
-
+* Follow function attached below and include...
+  - the name of the colour palette we want to use,
+  - the list of colour palettes we want to extract our choice from,
+  - how many colours from it we want to use
+  - whether we want a discrete or continuous colour palette
+  
+![Color Code](ColorCode.png)
+  
 ## Running Code
 
 When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
 
 ```{r}
-1 + 1
+# Basic scatterplot
+
+plot(x=nitrogenaverage$Month, y=nitrogenaverage$Nitrogen, pch=18, xlab= "Month", ylab = "Nitrogen (mg/L)")
+
 ```
 
 You can add options to executable code like this
