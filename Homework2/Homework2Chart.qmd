@@ -1,0 +1,60 @@
+---
+title: "Homework.2.Chart"
+format: html
+editor: source
+---
+
+## Loading packages
+
+```{r}
+
+library(ggplot2)
+library(dplyr)
+install.packages("hrbrthemes")
+library(hrbrthemes)
+
+```
+
+## Creating a dataframe
+
+
+```{r}
+data <- data.frame(name=c("north","south","south-east","north-west","south-west","north-east","west","east"), val=sample(seq(1,10), 8))
+
+data
+```
+
+#### Making a scatterplot of color depending on species
+
+```{r}
+
+ggplot(iris, aes(x=Sepal.Length, y=Sepal.Width, color=Species)) + 
+    geom_point(size=6) +
+    theme_ipsum()
+
+```
+
+#### Inseting a new dataset from excel
+
+
+```{r}
+
+library(readxl)
+Homework_2 <- read_excel("~/Desktop/Homework.2.xlsx")
+View(Homework_2)
+```
+
+#### Plotting Homework.2 Data
+
+```{r}
+
+ggplot(Homework_2, aes(x=Month, y=Concentration, color=NutrientType)) +
+         geom_point(size=6) + theme_ipsum()
+
+```
+
+#### Notes on this plot
+
+* First, I tell R what dataset I'll be using (homework2)
+* Then, I define the x values, the y values and the category that I want to be resembled by different colors
+* Then I define the size and the color theme with the geom_point function
