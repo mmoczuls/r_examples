@@ -15,6 +15,13 @@ library(pacman)
 
 p_load(chorddiag, htmlwidgets, tidyverse)
 
+library(chorddiag)
+library(htmlwidgets)
+library(igraph)
+library(readr)
+library(tidygraph)
+library(tidyverse)
+
 
 
 # read in and wrangle data ------
