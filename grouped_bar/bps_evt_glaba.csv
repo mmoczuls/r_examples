@@ -1,0 +1,11 @@
+type,past_acres,current_acres
+Conifer,6061496.658,6186878.484
+Grassland,792438.102,27346.404
+Hardwood,41246203.84,18792628.78
+Hardwood-Conifer,9160638.192,3118522.356
+Riparian,15299639.27,11146008.61
+ Savanna,11.988,0
+ Shrubland,7575.528,1404.594
+Agricultural,0,21906112.18
+Developed,0,9999716.052
+Exotics,0,1389386.112

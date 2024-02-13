@@ -1,0 +1,36 @@
+---
+title: "Class Objectives"
+format: docx
+editor: visual
+---
+
+## Goals of this document
+
+We will treat this class more like a job. There will not be tests or quizzes. Rather we will have conversations where we discuss how you are doing, and what you could improve on. You will reflect on your work, I will reply and we will discuss your grade from there.
+
+We can discuss amendment of objectives as well, especially your personal objectives.
+
+## Basic objectives
+
+Over the course it is expected you will:
+
+**Technically**
+
+1.  Understand and implement the basic R-Studio -\> GitHub workflow; be able to collaborate using GitHub.
+2.  Work in Quarto files; be able to adjust format and make output look nice.
+3.  Complete https://swcarpentry.github.io/r-novice-gapminder/index.html
+4.  Develop slideshow and website.
+5.  Use code to further your own research.
+
+**Communications**
+
+1.  Provide respectful feedback in class and on Slack.
+2.  Assist with issues on in class and on Slack.
+
+## Personal objectives
+
+* Create workflowR website 
+https://workflowr.github.io/workflowr/
+* explore landuse change and nutrient data (probably do on workflowR website)
+* practice with lubridata package
+* consider some GIS in R, probably for mangrove mapping
