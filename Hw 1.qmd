@@ -1,0 +1,34 @@
+---
+title: "Homework 1"
+author: "Michelle Moczulski"
+format: html
+editor: source
+---
+
+# Custon colour palettes for ggplot2 notes
+
+### Color packages on R:
+* ggplot2
+* RColorBrewer
+* viridis
+
+
+
+## Nitrogen Data
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+# Basic scatterplot
+plot(x=Phosphorus_R_HW1$Date, y=Phosphorus_R_HW1$Phosphorus,
+     xlim=c(0,), ylim=c(0,0.5))
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).

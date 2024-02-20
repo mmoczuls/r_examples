@@ -10,17 +10,23 @@
 # load packages ------
 # we will first install pacman, then use it to install and load packages
 
-install.packages('pacman')
-library(pacman)
-
-p_load(chorddiag, htmlwidgets, tidyverse)
+# install.packages('pacman')
+# library(pacman)
+# 
+# p_load(chorddiag, htmlwidgets, tidyverse)
 
 library(chorddiag)
 library(htmlwidgets)
 library(igraph)
+install.packages('igraph')
 library(readr)
+install.packages("tidygraph")
 library(tidygraph)
 library(tidyverse)
+install.packages("matrix")
+library(Matrix)
+install.packages("igraph")
+
 
 
 

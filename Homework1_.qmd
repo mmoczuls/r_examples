@@ -1,0 +1,87 @@
+---
+title: "Homework Assignment"
+author: "Michelle Moczulski"
+format:
+  html:
+    toc: true
+editor: source
+---
+
+### Mangroves
+##### Background
+* Mangroves are coastal shrubs with thick roots that serve:
+  + Safe nurseries for young fish
+  + Stabilizers for coastlines
+  + Nutrient filters
+  + And much more
+  
+![Mangrove Forest](mangrove.jpeg)
+
+
+
+* My senior thesis will focus on:
+  + Nutrient pollution (nitrogen and phosphorus) in St. John's County, Florida
+  + Land use change in St. John's County, Florida:
+    - Urbanization
+    - Agriculture
+    - Mangroves and wetlands
+  + If and how land use change and nutrient pollution are interconnected
+    
+Urbanization
+: the shift of human populations from rural to urban areas, as well as the transformation of land for residential, commercial, industrial and transportation purposes 
+
+
+### Nitrogen and Phosphorus
+
+* Nitrogen (N) and phosphorus (P) are sourced from both naturally occurring and anthropogenic vessels
+* N and P are rarely found in raw form. Rather, they are found in variations such as...
+  + NH4: ammonium
+  + NOx: nitric oxide
+  + PO4: Phosphate
+  + And more, but my thesis will focus on these 3
+* An excess amount of N and P leads to eutrophication, which then leads to 
+  + Oxygen depletion
+  + Species loss
+  + Increased turbidity
+  + And potentially ecosystem collapse
+* N and P are limiting nutrients, thus protecting mangroves will not only reduce nutrient pollution but also improve mangrove growth. Win-win :)
+
+```{mermaid}
+flowchart LR
+  A[Nutrient runoff] --> B[Increased algae]
+  B --> C[Algae dies]
+  C --> D[Oxygen depletes]
+  D --> E[Species decline]
+  D --> F[Increased turbidity]
+  D --> G[Ecosystem collapse]
+```
+
+Eutrophication
+: a process where an aquatic ecosystem gets an excess of nutrients from an external source, such as urban runoff, and promotes phytoplankton growth
+
+Red Tides
+: similar to eutrophication. When there is an excessive amount of algal growth and causes discoloration of the water from toxic red dinoflagellates
+
+Limiting Nutrients
+:  nutrient that limits the potential for growth and reproduction in an organism or population. Within an ecosystem, plants, animals and other living organisms require certain nutrients to grow and reproduce
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).

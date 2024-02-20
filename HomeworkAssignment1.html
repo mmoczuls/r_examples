@@ -88,7 +88,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#color-packages-on-r" id="toc-color-packages-on-r" class="nav-link" data-scroll-target="#color-packages-on-r">Color packages on R:</a></li>
   <li><a href="#building-a-colour-palette" id="toc-building-a-colour-palette" class="nav-link" data-scroll-target="#building-a-colour-palette">Building a colour palette</a></li>
   <li><a href="#defining-colors-and-generating-a-palette" id="toc-defining-colors-and-generating-a-palette" class="nav-link" data-scroll-target="#defining-colors-and-generating-a-palette">Defining Colors and generating a palette</a></li>
-  <li><a href="#running-code" id="toc-running-code" class="nav-link" data-scroll-target="#running-code">Running Code</a></li>
+  <li><a href="#creating-ggplot2-function" id="toc-creating-ggplot2-function" class="nav-link" data-scroll-target="#creating-ggplot2-function">Creating GGplot2 Function</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -155,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Create a named list for your color palette
 <ul>
-<li>Ex: Color_Purple &lt;- c(rbg values)</li>
+<li>Ex: Color_Purple &lt;- c(rbg value1, rbg value 2, etc)</li>
 </ul></li>
 <li>Follow function attached below and include…
 <ul>
@@ -171,23 +171,169 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>Color Code</figcaption>
 </figure>
 </div>
+<ul>
+<li>you will be given default RStudio colors. However…
+<ul>
+<li>Use the colorRampPalette() from {grDevices} to interpolate the given colours onto a spectrum</li>
+<li>And THEN the switch() function to change the output of colors based on the chosen type of palette</li>
+<li>Ex:</li>
+</ul></li>
+</ul>
+<p><code>cvi_palettes = function(name, n, all_palettes = cvi_colours, type = c("discrete", "continuous")) {palette = all_palettes[[name]]   if (missing(n)) {n = length(palette)}   type = match.arg(type)   out = switch(type, continuous = grDevices::colorRampPalette(palette)(n),                discrete = palette[1:n])                structure(out, name = name, class = "palette")}</code></p>
 </section>
-<section id="running-code" class="level2">
-<h2 class="anchored" data-anchor-id="running-code">Running Code</h2>
-<p>When you click the <strong>Render</strong> button a document will be generated that includes both content and the output of embedded code. You can embed code like this:</p>
+<section id="creating-ggplot2-function" class="level2">
+<h2 class="anchored" data-anchor-id="creating-ggplot2-function">Creating GGplot2 Function</h2>
+<ul>
+<li>Start by defining simple ggplot 2 to demonstrate colors on later</li>
+</ul>
+<p><code>library("ggplot2") df = data.frame(x = c("A", "B", "C"),                 y = 1:3) g = ggplot(data = df,            mapping = aes(x = x, y = y)) +   theme_minimal() +   theme(legend.position = c(0.05, 0.95),         legend.justification = c(0, 1),         legend.title = element_blank(),          axis.title = element_blank())</code></p>
+<section id="two-main-ways-to-control-the-look-of-your-plot" class="level5">
+<h5 class="anchored" data-anchor-id="two-main-ways-to-control-the-look-of-your-plot">Two main ways to control the look of your plot</h5>
+<ol type="1">
+<li>scale_* function:</li>
+</ol>
+<ul>
+<li>Control the aesthetics that have been mapped to your data</li>
+</ul>
+<ol start="2" type="1">
+<li>Using themes:</li>
+</ol>
+<ul>
+<li>Control the aspects of your plot which do not depend on your data e.g.&nbsp;the background color</li>
+</ul>
+</section>
+<section id="two-aesthetics-in-ggplot2-that-involve-color" class="level5">
+<h5 class="anchored" data-anchor-id="two-aesthetics-in-ggplot2-that-involve-color">Two aesthetics in {ggplot2} that involve color</h5>
+<ol type="1">
+<li>Colour, which changes the outline colour of a geom</li>
+<li>Fill, which changes the inner colour of a geom</li>
+</ol>
+<p><code>g + geom_col(aes(fill = x), colour = "black", size = 2) + ggtitle("Fill") g + geom_col(aes(colour = x), fill = "white", size = 2) + ggtitle("Colour")</code></p>
+<ul>
+<li><p>For each aesthetic, colour and fill, the function needs to be able to handle both discrete and continuous colour palettes. We need to make two functions:</p>
+<ol type="1">
+<li>one to handle a discrete variable</li>
+<li>one for continuous variables</li>
+</ol></li>
+</ul>
+<section id="color-scale-for-discrete" class="level6">
+<h6 class="anchored" data-anchor-id="color-scale-for-discrete">Color scale for discrete</h6>
+<p><code>scale_colour_cvi_d = function(name) {   ggplot2::scale_colour_manual(values = cvi_palettes(name,                                                     type = "discrete")) }</code></p>
+</section>
+<section id="color-fill-for-discrete" class="level6">
+<h6 class="anchored" data-anchor-id="color-fill-for-discrete">Color fill for discrete</h6>
+<p><code>scale_fill_cvi_d = function(name) {   ggplot2::scale_fill_manual(values = cvi_palettes(name,                                                     type = "discrete")) }</code></p>
+</section>
+<section id="color-scale-and-fill-for-continuous" class="level6">
+<h6 class="anchored" data-anchor-id="color-scale-and-fill-for-continuous">Color scale and fill for continuous</h6>
+<p>Just change the type to continuous</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The doughnut function permits to draw a donut plot</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>doughnut <span class="ot">&lt;-</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">function</span> (x, <span class="at">labels =</span> <span class="fu">names</span>(x), <span class="at">edges =</span> <span class="dv">200</span>, <span class="at">outer.radius =</span> <span class="fl">0.8</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">inner.radius=</span><span class="fl">0.6</span>, <span class="at">clockwise =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">init.angle =</span> <span class="cf">if</span> (clockwise) <span class="dv">90</span> <span class="cf">else</span> <span class="dv">0</span>, <span class="at">density =</span> <span class="cn">NULL</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">angle =</span> <span class="dv">45</span>, <span class="at">col =</span> <span class="cn">NULL</span>, <span class="at">border =</span> <span class="cn">FALSE</span>, <span class="at">lty =</span> <span class="cn">NULL</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">main =</span> <span class="cn">NULL</span>, ...)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x) <span class="sc">||</span> <span class="fu">any</span>(<span class="fu">is.na</span>(x) <span class="sc">|</span> x <span class="sc">&lt;</span> <span class="dv">0</span>))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">stop</span>(<span class="st">"'x' values must be positive."</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(labels))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        labels <span class="ot">&lt;-</span> <span class="fu">as.character</span>(<span class="fu">seq_along</span>(x))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> labels <span class="ot">&lt;-</span> <span class="fu">as.graphicsAnnot</span>(labels)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">cumsum</span>(x)<span class="sc">/</span><span class="fu">sum</span>(x))</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    dx <span class="ot">&lt;-</span> <span class="fu">diff</span>(x)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    nx <span class="ot">&lt;-</span> <span class="fu">length</span>(dx)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot.new</span>()</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    pin <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="st">"pin"</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    xlim <span class="ot">&lt;-</span> ylim <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (pin[<span class="dv">1</span>L] <span class="sc">&gt;</span> pin[<span class="dv">2</span>L])</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        xlim <span class="ot">&lt;-</span> (pin[<span class="dv">1</span>L]<span class="sc">/</span>pin[<span class="dv">2</span>L]) <span class="sc">*</span> xlim</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> ylim <span class="ot">&lt;-</span> (pin[<span class="dv">2</span>L]<span class="sc">/</span>pin[<span class="dv">1</span>L]) <span class="sc">*</span> ylim</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot.window</span>(xlim, ylim, <span class="st">""</span>, <span class="at">asp =</span> <span class="dv">1</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(col))</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        col <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">is.null</span>(density))</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>          <span class="fu">palette</span>()</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span> <span class="fu">par</span>(<span class="st">"fg"</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    col <span class="ot">&lt;-</span> <span class="fu">rep</span>(col, <span class="at">length.out =</span> nx)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    border <span class="ot">&lt;-</span> <span class="fu">rep</span>(border, <span class="at">length.out =</span> nx)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    lty <span class="ot">&lt;-</span> <span class="fu">rep</span>(lty, <span class="at">length.out =</span> nx)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    angle <span class="ot">&lt;-</span> <span class="fu">rep</span>(angle, <span class="at">length.out =</span> nx)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    density <span class="ot">&lt;-</span> <span class="fu">rep</span>(density, <span class="at">length.out =</span> nx)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    twopi <span class="ot">&lt;-</span> <span class="cf">if</span> (clockwise)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        <span class="sc">-</span><span class="dv">2</span> <span class="sc">*</span> pi</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="dv">2</span> <span class="sc">*</span> pi</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    t2xy <span class="ot">&lt;-</span> <span class="cf">function</span>(t, radius) {</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>        t2p <span class="ot">&lt;-</span> twopi <span class="sc">*</span> t <span class="sc">+</span> init.angle <span class="sc">*</span> pi<span class="sc">/</span><span class="dv">180</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>        <span class="fu">list</span>(<span class="at">x =</span> radius <span class="sc">*</span> <span class="fu">cos</span>(t2p),</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> radius <span class="sc">*</span> <span class="fu">sin</span>(t2p))</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span>L<span class="sc">:</span>nx) {</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>        n <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="dv">2</span>, <span class="fu">floor</span>(edges <span class="sc">*</span> dx[i]))</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        P <span class="ot">&lt;-</span> <span class="fu">t2xy</span>(<span class="fu">seq.int</span>(x[i], x[i <span class="sc">+</span> <span class="dv">1</span>], <span class="at">length.out =</span> n),</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>                  outer.radius)</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>        <span class="fu">polygon</span>(<span class="fu">c</span>(P<span class="sc">$</span>x, <span class="dv">0</span>), <span class="fu">c</span>(P<span class="sc">$</span>y, <span class="dv">0</span>), <span class="at">density =</span> density[i],</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>                <span class="at">angle =</span> angle[i], <span class="at">border =</span> border[i],</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>                <span class="at">col =</span> col[i], <span class="at">lty =</span> lty[i])</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>        Pout <span class="ot">&lt;-</span> <span class="fu">t2xy</span>(<span class="fu">mean</span>(x[i <span class="sc">+</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>]), outer.radius)</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>        lab <span class="ot">&lt;-</span> <span class="fu">as.character</span>(labels[i])</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.na</span>(lab) <span class="sc">&amp;&amp;</span> <span class="fu">nzchar</span>(lab)) {</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>            <span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">1.05</span>) <span class="sc">*</span> Pout<span class="sc">$</span>x, <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">1.05</span>) <span class="sc">*</span> Pout<span class="sc">$</span>y)</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>            <span class="fu">text</span>(<span class="fl">1.1</span> <span class="sc">*</span> Pout<span class="sc">$</span>x, <span class="fl">1.1</span> <span class="sc">*</span> Pout<span class="sc">$</span>y, labels[i],</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xpd =</span> <span class="cn">TRUE</span>, <span class="at">adj =</span> <span class="fu">ifelse</span>(Pout<span class="sc">$</span>x <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>                 ...)</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>        <span class="do">## Add white disc          </span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>        Pin <span class="ot">&lt;-</span> <span class="fu">t2xy</span>(<span class="fu">seq.int</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> n<span class="sc">*</span>nx),</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>                  inner.radius)</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>        <span class="fu">polygon</span>(Pin<span class="sc">$</span>x, Pin<span class="sc">$</span>y, <span class="at">density =</span> density[i],</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>                <span class="at">angle =</span> angle[i], <span class="at">border =</span> border[i],</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>                <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">lty =</span> lty[i])</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>    <span class="fu">title</span>(<span class="at">main =</span> main, ...)</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>    <span class="fu">invisible</span>(<span class="cn">NULL</span>)</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's use the function, it works like PiePlot !</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="co"># inner.radius controls the width of the ring!</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="fu">doughnut</span>( <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">12</span>) , <span class="at">inner.radius=</span><span class="fl">0.5</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="fu">rgb</span>(<span class="fl">0.2</span>,<span class="fl">0.2</span>,<span class="fl">0.4</span>,<span class="fl">0.5</span>), <span class="fu">rgb</span>(<span class="fl">0.8</span>,<span class="fl">0.2</span>,<span class="fl">0.4</span>,<span class="fl">0.5</span>), <span class="fu">rgb</span>(<span class="fl">0.2</span>,<span class="fl">0.9</span>,<span class="fl">0.4</span>,<span class="fl">0.4</span>) , <span class="fu">rgb</span>(<span class="fl">0.0</span>,<span class="fl">0.9</span>,<span class="fl">0.8</span>,<span class="fl">0.4</span>)) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in rep(lty, length.out = nx): 'x' is NULL so the result will be NULL</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in rep(density, length.out = nx): 'x' is NULL so the result will be NULL</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="HomeworkAssignment1_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>You can add options to executable code like this</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4</code></pre>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x=</span><span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) <span class="sc">+</span> <span class="fl">0.1</span><span class="sc">*</span><span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>)<span class="sc">*</span><span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) , <span class="dv">100</span> , <span class="at">replace=</span>T),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y=</span><span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) <span class="sc">+</span> <span class="fl">0.2</span><span class="sc">*</span><span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>)<span class="sc">*</span><span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) , <span class="dv">100</span> , <span class="at">replace=</span>T)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Basic scatterplot</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x=</span>data<span class="sc">$</span>x, <span class="at">y=</span>data<span class="sc">$</span>y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="HomeworkAssignment1_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>The <code>echo: false</code> option disables the printing of code (only output is displayed).</p>
+</section>
+</section>
 </section>
 </section>
 

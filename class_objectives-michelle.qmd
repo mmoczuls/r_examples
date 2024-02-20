@@ -29,8 +29,7 @@ Over the course it is expected you will:
 
 ## Personal objectives
 
-* Create workflowR website 
-https://workflowr.github.io/workflowr/
-* explore landuse change and nutrient data (probably do on workflowR website)
-* practice with lubridata package
-* consider some GIS in R, probably for mangrove mapping
+-   Create workflowR website https://workflowr.github.io/workflowr/
+-   explore landuse change and nutrient data (probably do on workflowR website)
+-   practice with lubridata package
+-   consider some GIS in R, probably for mangrove mapping

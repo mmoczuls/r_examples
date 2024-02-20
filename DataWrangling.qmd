@@ -1,0 +1,104 @@
+---
+title: "Data Wrangling"
+format: html
+editor: source
+---
+
+## Tidy Data
+
+* Standard way of mapping the meaning of dataset to its structure
+
+* Depends on how many rows, columns and matched with observations, variables and types
+  * Each variable forms a column
+  * Each observation forms a row
+  * Each type of observational unit forms a table
+  
+## Subset using filter
+
+* Want to subset one country (Austrailia)
+
+* Following code starts by taking gapminder dataset and filters that the only rows of the dataset selected are Austrailia
+
+* %>% is the pipe function
+
+
+
+```{r}
+data <- read.csv(file = "/Users/michellemoczulski/Desktop/gapminder_data.csv")
+
+data
+
+data %>% dplyr::filter(country=="Australia") %>% head(n=12)
+
+```
+
+## Subset using multiple conditions:
+
+* Head function shows some selected rows
+* Gapminder is piped to filter function to select rows from head
+* fulter restricts continents to Oceania and year to 1997 
+
+```{r}
+data %>% 
+  dplyr::filter(continent=="Oceania" & year==1997) %>% 
+  head()
+
+### another example with Americas
+data %>% 
+  dplyr::filter(continent=="Oceania" | continent =="Americas") %>%
+  dplyr::filter(year==1997) %>% 
+  head()
+
+## filters countries
+data %>% 
+  dplyr::filter(continent=="Oceania" | continent =="Americas") %>%
+  dplyr::filter(year==1997) %>% 
+  head()
+```
+
+## Saving a new data frame
+```{r}
+gap97 <- data %>% 
+  filter(continent!="Oceania" & year==1997) 
+#
+dplyr::glimpse(gap97)
+```
+
+## Subsetting using top_n
+
+* Make a dataset with 10 countries in 1997 with highst gdp
+
+```{r}
+data %>% filter(year==1997) %>%
+  top_n(n = 10, wt = gdpPercap) %>%
+  head(n=10)
+```
+
+## Subset using select
+
+* filter function controls rows of the dataframe
+* Sometimes want to include ony few variables (columns) in a dataset
+* We can creat dataset with few variables when original dataset has many
+* That's what the select tool is used for
+
+```{r}
+data %>% 
+  dplyr::select(country, Year=year,LifeExp=lifeExp) %>% 
+  head()
+
+# to change the order of display, puts year first in the list of variables
+data %>% 
+  select(year,everything()) %>% 
+  head()
+```
+
+* profiling_num command from the funModeling package produces a lot of output, some we might not want
+* Remove some columns by selecting a list of column names with a "minus" sign in front of it
+
+```{r}
+install.packages('funModeling')
+library('funModeling')
+# Let's observe the contents of profiling_num:
+funModeling::profiling_num(data) %>% 
+  dplyr::glimpse()
+```
