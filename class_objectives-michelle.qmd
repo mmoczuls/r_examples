@@ -33,3 +33,7 @@ Over the course it is expected you will:
 -   explore landuse change and nutrient data (probably do on workflowR website)
 -   practice with lubridata package
 -   consider some GIS in R, probably for mangrove mapping
+
+## Self reflection
+
+If I were to give myself a grade, I'd give myself an A-. I feel I have learned a lot in this class and have improved immensely as a coder. I also feel myself becoming more comfortable using R and looking information up on google or ChatGBT when I am confused, while before, when something didn't work, I would just give up. I feel that sometimes I get overwhelmed in this class because it's all new information and sometimes fall behind on homework assignments, which is why I would give myself an A- instead of an A. I do also feel that the figures I make are less advanced than the graduate students, which also makes me think that maybe I am behind. However, I know this is an intro course and everyone is at a different level, so hopefully my more simple graphs don't go aganist my grade. 
