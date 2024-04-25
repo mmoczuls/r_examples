@@ -10,31 +10,30 @@ library(writexl)
 
 ## importing data
 
-bps_aoi_attributes <- read_csv("input_data/bps_aoi_attributes.csv")
+bps_aoi_attributes <- read_csv("code_challenge/code_challenge/input_data/bps_aoi_attributes.csv")
 View(bps_aoi_attributes)
 
-bps_model_number_name <- read_csv("input_data/bps_model_number_name.csv")
+bps_model_number_name <- read_csv("code_challenge/code_challenge/input_data/bps_model_number_name.csv")
 View(bps_model_number_name)
 
-combine_raw <- read_csv("input_data/combine_raw.csv")
+combine_raw <- read_csv("code_challenge/code_challenge/input_data/combine_raw.csv")
 View(combine_raw)
 
-LF16_BPS_200 <- read_csv("input_data/LF16_BPS_200.csv")
+LF16_BPS_200 <- read_csv("code_challenge/code_challenge/input_data/LF16_BPS_200.csv")
 View(LF16_BPS_200)
 
-ref_con_modified <- read_csv("input_data/ref_con_modified.csv")
+ref_con_modified <- read_csv("code_challenge/code_challenge/input_data/ref_con_modified.csv")
 View(ref_con_modified)
 
-scls_aoi_attributes <- read_csv("input_data/scls_aoi_attributes.csv")
+scls_aoi_attributes <- read_csv("code_challenge/code_challenge/input_data/scls_aoi_attributes.csv")
 View(scls_aoi_attributes)
-
 ## Renaming column to model code
 
-bps_aoi_attributes$Model_Code <- bps_aoi_attributes$BPS_MODEL
+bps_aoi_attributes$Model_Code <- bps_aoi_attributes$BPS_MODEL ## I'm changing the column name in bps_aoi_attributes from BPS_MODEL to Model_Code
 
 ## merging datasets for past 
 
-merged_df <- merge(bps_aoi_attributes, bps_model_number_name, by = "Model_Code")
+merged_df <- merge(bps_aoi_attributes, bps_model_number_name, by = "Model_Code") ##this line of code is subsetting the following into merged_df...merge() means that I'm combining 2 datasets into one. By = means that "Model_Code" is the common denominator between the 2 and it will be combined by that name
 
 merged_df_all <- merge(merged_df, ref_con_modified, by = "Model_Code") %>% 
   subset(select= -c(B.x)) %>% 
@@ -48,7 +47,7 @@ past_long <- pivot_longer(merged_df_all,
                           cols = c(A, B, C, D, E, Agriculture, Developed, Water, 
                                    UN, UE), 
                           names_to = "Past",
-                          values_to = "Past_Value")
+                          values_to = "Past_Value") ## here I am making a subset called past_long that uses the pivot_longer function to change the following columns (A, B, C, etc...) to be in one column and the following column will be the value associated with that category
 
 ## cleaning past data
 
@@ -58,7 +57,7 @@ past_cleaned <- past_long[, !(names(past_long) %in% c("ZONE", "GROUPVEG", "R", "
 ## filtering data to just be desired values
 
 filtered_past <- past_cleaned %>% filter(Model_Code %in% c("13040_32_43_44_49", "13670_32_44", "15070_44")) %>%
-  unite(model_label, c("Model_Code", "Category_Past")) #google how to not get rid of category
+  unite(model_label, c("Model_Code", "Past_Value")) #google how to not get rid of category
 
 ### present data
 
@@ -103,7 +102,8 @@ filtered_present <- combine_[, !(names(combine_) %in% c("ZONE", "Freq", "...1", 
 
 ## combining past and present
 
-merged_data <- merge(filtered_present, filtered_past, by = "model_label")
+merged_data <- read_excel("code_challenge/code_challenge/input_data/merged_data.xlsx")
+View(merged_data)
 
 
 write.csv(merged_data, "merged_data.csv")
